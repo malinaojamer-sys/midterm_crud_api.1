@@ -4,8 +4,11 @@ import {
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
+    OneToMany,
+    Index
 } from 'typeorm';
+import { Task } from './Task';
 
 @Entity('users') 
 export class User {
@@ -23,6 +26,10 @@ export class User {
 
     @Column({  type: 'varchar', default: true })
     isActive!: boolean;
+
+    @OneToMany(() => Task, (task) => task.user)
+   tasks!: Task[];
+
 
     @CreateDateColumn()
     createdAt!: Date;

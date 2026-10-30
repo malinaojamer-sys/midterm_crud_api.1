@@ -1,28 +1,31 @@
+import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-dotenv.config();
+
 import { AppDataSource } from '@config/data-source';
 import { userRoutes } from './routes/userRoutes';
-import * as dotenv from 'dotenv';
+import { taskRoutes } from './routes/taskRoutes';
+
 import { Timestamp } from 'typeorm/driver/mongodb/bson.typings.js';
 
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
+app.use('/api', taskRoutes);
 
 app.get('/health', (req, res) => {
     res.json({
         success: true,
         message: 'API is running',
         timestamp: new Date().toISOString()
-    })
+    });
 
 });
 app.use((req, res)=> {
